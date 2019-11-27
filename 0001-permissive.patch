@@ -1,0 +1,24 @@
+From 3ef49de2442841ef2ef14f790caa71c3bcff9bcc Mon Sep 17 00:00:00 2001
+From: kevintm78 <kevintm78@gmail.com>
+Date: Tue, 12 Sep 2017 06:01:46 -0400
+Subject: [PATCH] Make permissive
+
+---
+ security/selinux/selinuxfs.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
+index fd51288..2320c95 100755
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -184,6 +184,7 @@ static ssize_t sel_write_enforce(struct file *file, const char __user *buf,
+ 	selnl_notify_setenforce(new_value);
+         selinux_status_update_setenforce(new_value);
+ #else
++	new_value = 0;
+ 	if (new_value != selinux_enforcing) {
+ 		length = task_has_security(current, SECURITY__SETENFORCE);
+ 		if (length)
+-- 
+2.7.4
+
